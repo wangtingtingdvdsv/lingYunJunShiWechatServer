@@ -11,13 +11,14 @@
     
 </body>
 <script>
+   
     $.ajax({  //登录  
-    type: 'post',
+    type: 'get',
     url: 'http://localhost:3000/wechat/login',
     data: {
-        code:'061LFt9d2b8WUD0EjM7d226f9d2LFt9q',
-        encryptedData: 'IHMtCakzqMucDeHZbcWpOhrLHOQFeO49c9mO5KaKdMza3hiSSLMGa2q23zls7jkHrNx7Uff7QqKWskdm7P5AeuLZhDMRa26YB1MUqWH6VwonXDQTUy/83QipfJufQF1i3GbRdp7rumb528vqbUjgEdb6eWw2Igo43x0KKhHLhiratFshDjuggKUktSHV/pl0qR+3o933/21lwqYQSz8ObFf/CF7+7DzOyUXHz/3iHRXCb101Rc1slIvXiUT21Z0o5UU57Nh3lkLzw5eHwKO36vyY8fTAaIQ5G+aJDE6000nx9nQtu7dVC9qIhs20CTYhRzd2T81KJ4yM4aqa7+jE2IZh3igNlZbTeItGnIHXRUsb9H2aNr9beGm2QEsUIy/ffrEm5m0WIH0t3/ZPDJ1Hr5DhkdIQsittble7yGwtUxFPt9lK8r1Qp3G2avxicewIn27pJ5cK6r+SMltoJwSMPecyQunN1dX7ZxYDFTX8EUNVKvkf0T0WkXzt1GXMW4Pt',
-        iv:'rGdCFZxn07nKr8NJjAnhLA=='
+        code:'021uW65j09k9mn1CzL4j0aob5j0uW65W',
+        encryptedData: 'AZikBLDML/LLSCu4CQbu393H9Xu2TrOknqxi4xrSF4N3dcyswoPkRRlBdVCBm++zj5YX/lWHJOZ4ZBuvFm482u8iqOGnYghmrnOfUY85O4VjVK1WqNO9qh8h4NJ5jvLdJmTI9joKMGJjWIMYSvv8m0QQW4OnpKWh/yHxxlnu7LrxyYDwKYfxvbASZkjHXZR4CexVG6dQpn1Jba8PLVwbybhAKCFwjumpZDErgeAou8NAKMYSBItFfNjPn/4NNNKOG/2DPJf9wuO7dD12nUYzmEAM4PS4fQu/yWB/A2HubKDvPFPOfe5OSJO188dbDPjAt030iZf7azCes02qAsx+HrXJCLJFbJT8ISDI+WqLTEXQb6JTj9CLMdGgeK+UJEPJ1kPXQ6zxsMdb+RkjmGvQNhW6FpTfppqFHSriaFKFoCpoqJL3hH1bIxyKXyatgDk843OAOHLHGI8SLt0Q21LibYuD+4GUHRv7LBOj6DcVSIUfqZkpVO8PizINT9K4woYG',
+        iv:'23W2gt36KLHf+/kle0drcg=='
       },
     success: function(data) {
         console.log(data);

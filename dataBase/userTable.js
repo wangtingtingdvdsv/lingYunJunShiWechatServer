@@ -7,7 +7,9 @@ var connection = mysql.createConnection(config);
 connection.connect();
 
 async function insertUser(data) {
-    if(searchUser(data.openId)) {
+    let dataInfo = await searchUser(data.openId);
+    if(dataInfo.length != 0) {
+        console.log(await searchUser(data.openId));
         return;//已经插入过了
     }
     var sql = `INSERT INTO usertable( user_name , user_openid, user_icon, user_gender) values ('${data.nickName}', '${data.openId}', '${data.avatarUrl}','${data.gender}')`;
