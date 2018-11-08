@@ -4,18 +4,18 @@ const userTbale = require('../dataBase/userTable.js');
 
 const appId = 'wx33fdb2328d611917';
 const secret = '6c2ab9894fd10a107642e37b62b13b28'; 
-const data = { 
-    openId: 'oE3wM5Cv9iT52lJjGFGl6ZRnslWk',
-    nickName: '不畏将来，不念过往',
-    gender: 2,
-    language: 'zh_CN',
-    city: 'Xi\'an',
-    province: 'Shaanxi',
-    country: 'China',
-    avatarUrl:
-    'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTL82pR12tiaOkBIGYiaMfPYRe3zEa8YfwGC4UiaMmATA2iazjfe8egQu1eKOh91jXbia7Egia7OymKuNq6w/132',
-    watermark: { timestamp: 1541386698, appid: 'wx33fdb2328d611917' } 
-}
+// const data = { 
+//     openId: 'oE3wM5Cv9iT52lJjGFGl6ZRnslWk',
+//     nickName: '不畏将来，不念过往',
+//     gender: 2,
+//     language: 'zh_CN',
+//     city: 'Xi\'an',
+//     province: 'Shaanxi',
+//     country: 'China',
+//     avatarUrl:
+//     'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTL82pR12tiaOkBIGYiaMfPYRe3zEa8YfwGC4UiaMmATA2iazjfe8egQu1eKOh91jXbia7Egia7OymKuNq6w/132',
+//     watermark: { timestamp: 1541386698, appid: 'wx33fdb2328d611917' } 
+// }
 
 var modifyUserInfo = async function(ctx, next) {//信息修改接口
     let data = ctx.request.body;
@@ -45,13 +45,21 @@ var login = async function (ctx, next) {  //登录接口
     var code = ctx.query.code;
     var iv = ctx.query.iv;
 
-    //await getOpenIdAndSessionKey(code, encryptedData, iv);
-    var result = await userTbale.insertUser(data)
-        console.log(result);
+    var data = await getOpenIdAndSessionKey(code);
+    let openid = data.data.openid;
+    let session_key = data.data.session_key;
 
-    var search = await userTbale.searchUser('oE3wM5Cv9iT52lJjGFGl6ZRnslWk')
+    let pc = new WXBizDataCrypt(appId, session_key)
+
+    let info = pc.decryptData(encryptedData , iv)
+    console.log('!!!!!!!!!!data', info);
+
+    var result = await userTbale.insertUser(info)
+
+
+    var search = await userTbale.searchUser(openid)
     ctx.status = 200;
-        console.log('se', search)
+        //console.log('se', search)
         ctx.body = {
             code: 0,
             msg: 'success',
@@ -60,30 +68,29 @@ var login = async function (ctx, next) {  //登录接口
 }
 
 async function getOpenIdAndSessionKey(code, encryptedData, iv) {
-    await axios.get('https://api.weixin.qq.com/sns/jscode2session', {
+    return await axios.get('https://api.weixin.qq.com/sns/jscode2session', {
         params: {
             grant_type: 'authorization_code',  
             appid: appId, //小程序的唯一标识
             secret: secret, //小程序的app secret
             js_code: code // code
         }
-    }).then(function(response){
-        if(response.status === 200) {
-            console.log(response.data);
-            let openid = response.data.openid;
-            console.log('openid', openid);
-            let session_key = response.data.session_key;
+        })
+       // .then(function(response){
+    //     if(response.status === 200) {
+    //         console.log(response.data);
+    //         let openid = response.data.openid;
+            
+    //         let session_key = response.data.session_key;
 
-            let pc = new WXBizDataCrypt(appId, session_key)
+    //         let pc = new WXBizDataCrypt(appId, session_key)
 
-            let data = pc.decryptData(encryptedData , iv)
+    //         let data = pc.decryptData(encryptedData , iv)
 
-            console.log('解密后 data: ', data)
-
-
-
-        }
-    })
+    //         console.log('解密后 data: ', data)
+    //         return data;
+    //     }
+    // })
 
 }
 
