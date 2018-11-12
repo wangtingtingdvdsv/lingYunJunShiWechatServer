@@ -49,12 +49,15 @@ var login = async function (ctx, next) {  //登录接口
     let openid = data.data.openid;
     let session_key = data.data.session_key;
 
+
+
     let pc = new WXBizDataCrypt(appId, session_key)
 
     let info = pc.decryptData(encryptedData , iv)
-    console.log('!!!!!!!!!!data', info);
+
 
     var result = await userTbale.insertUser(info)
+
 
 
     var search = await userTbale.searchUser(openid)
@@ -76,21 +79,7 @@ async function getOpenIdAndSessionKey(code, encryptedData, iv) {
             js_code: code // code
         }
         })
-       // .then(function(response){
-    //     if(response.status === 200) {
-    //         console.log(response.data);
-    //         let openid = response.data.openid;
-            
-    //         let session_key = response.data.session_key;
-
-    //         let pc = new WXBizDataCrypt(appId, session_key)
-
-    //         let data = pc.decryptData(encryptedData , iv)
-
-    //         console.log('解密后 data: ', data)
-    //         return data;
-    //     }
-    // })
+      
 
 }
 

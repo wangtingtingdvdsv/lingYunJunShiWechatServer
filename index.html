@@ -12,18 +12,21 @@
 </body>
 <script>
    
-    $.ajax({  //登录  
-    type: 'get',
-    url: 'http://localhost:3000/wechat/login',
-    data: {
-        code:'021uW65j09k9mn1CzL4j0aob5j0uW65W',
-        encryptedData: 'AZikBLDML/LLSCu4CQbu393H9Xu2TrOknqxi4xrSF4N3dcyswoPkRRlBdVCBm++zj5YX/lWHJOZ4ZBuvFm482u8iqOGnYghmrnOfUY85O4VjVK1WqNO9qh8h4NJ5jvLdJmTI9joKMGJjWIMYSvv8m0QQW4OnpKWh/yHxxlnu7LrxyYDwKYfxvbASZkjHXZR4CexVG6dQpn1Jba8PLVwbybhAKCFwjumpZDErgeAou8NAKMYSBItFfNjPn/4NNNKOG/2DPJf9wuO7dD12nUYzmEAM4PS4fQu/yWB/A2HubKDvPFPOfe5OSJO188dbDPjAt030iZf7azCes02qAsx+HrXJCLJFbJT8ISDI+WqLTEXQb6JTj9CLMdGgeK+UJEPJ1kPXQ6zxsMdb+RkjmGvQNhW6FpTfppqFHSriaFKFoCpoqJL3hH1bIxyKXyatgDk843OAOHLHGI8SLt0Q21LibYuD+4GUHRv7LBOj6DcVSIUfqZkpVO8PizINT9K4woYG',
-        iv:'23W2gt36KLHf+/kle0drcg=='
-      },
-    success: function(data) {
-        console.log(data);
-    }
-})
+//     $.ajax({  //登录  
+//     type: 'get',
+//     url: 'http://localhost:3000/wechat/login',
+//     data: {
+//         code:'023yFYt51IoBCL1OBBr51yh3u51yFYto',
+//         // encryptedData: 's9KfeZWSHxncXJUpQ8cpm3hOXdXRuk5D4iQfIp+vfabAurXNyJ58PXZLdstJYLKt9AAIo0PBwO3HDwntCrveLAyqv9hH6gIXqwGrW0JaPGumH5jKtqvBZexe4LcUvMc3NxukTmCRY/seTzMQo6ETwPUUIjzdw8IEU5VQbGwx9BLO3Pc9uRj0BB2NL2cwN/f2GxEqb54IMhOwefAubMUK3VSE+4TZW+WYCiSsqdlFcJt7wTsCBUkrDcxC25vZ1uQrlvIvJnpGjZkxmUYB87l/LiVWW8fwjpum9SGMA2D7r5ubt0eea0/kQGEsQpYvHicitCkxFAI6t+UCViOgXNxEw77FuQ6ZkYtID/V6ZYkwNce6XIRVcuALRZwR4HE9T8+nUcea554J4Uv4C9YDM+iT0OprJNmHRaUG6LnNcetmCaxK46zrMKGfQ6qPxySWzxGkXytVxoreMb5oixETR4OTMhhDg9lW3oPieP+9ktb05v4=',
+//         // iv:'CCsz9DE77KDG75IY1hfVGw=='
+//         encryptedData: 'vLvtI06lwWKXSNqLyoCGuECv252v4RPWgJPcq/TyBkV9dMdtZKF+sXrVVq7hK3cjm2TwSSUMGhYaF+2sbkyIKEFbZh0Uth/rpdNZJLTfTiXb/X87Ibi5dExkPfEanVpzriYKjWcKh/PE2bQ7kEAxIBU5v6z0eT84SEO8EGZ9TBxcPwkCXq5yznO3KI4ICG5l38g0WTNA6VbMdcAEwEHFBDor0RNZeQbAWEAfi5YohoejTOSLcvH4VUmJTCjXDZaV9yrBdPOcWrzNnYy6JtqLs/b6CqWj7HLkk09OFM5YuRLg2Xd+mchP0RUwhs4hOIIqEjBn1LdBwa3HO/rTWdFvTyQiRKOBwAzVwPV5Ra6DvcbXrmON5N5uUgDxLoUpMsb3ttGFwKESQPc4TYyF8N9gx4+QOzv6OerL+yJnCyF7Wu1mFBAaHwzEpm3bNXrgjs9xwLaW19X4UPxmqqQeKeQEUNXTaPrIPIcLtwvCwiQw+2E51Kp7J0U0eCMJl7xNfSAK',
+//         iv: 'IbzKjyk1BMQQ6llgbG6GAw=='
+
+//     },
+//     success: function(data) {
+//         console.log(data);
+//     }
+// })
 
 //     $.ajax({  //查询 
 //     type: 'get',
@@ -56,16 +59,16 @@
 
 //--------------------------------------------------------------
 //商品
-// $.ajax({  //获取商品列表
-//     type: 'get',
-//     url: 'http://localhost:3000/buyer/product/list',
-//     data:{
+$.ajax({  //获取商品列表
+    type: 'get',
+    url: 'http://localhost:3000/buyer/product/list',
+    data:{
 
-//     },
-//     success: function(data) {
-//         console.log(data);
-//     }
-// })
+    },
+    success: function(data) {
+        console.log(data);
+    }
+})
 //-------------------------------------------------
 //评论
 //  $.ajax({  //获取商品评论
