@@ -11,12 +11,15 @@ async function getProductById(categoryId) {
     let sql = `select * from dishes WHERE category_type ='${categoryId}'`;   
     let result = await query(sql);
     console.log('**', result);
+
     if(result && result[0]) {
-        let pics = await picTable.getProductPic(result[0].product_id );
-        
-        result[0].pics = pics;
+        for(let i = 0; i < result.length; i++) {
+            let pics = await picTable.getProductPic(result[i].product_id );
+            
+            result[i].pics = pics;
+        }
     }
-    return result[0];
+    return result;
 }
 
 async function getProductList(categorys) { //获取商品列表
