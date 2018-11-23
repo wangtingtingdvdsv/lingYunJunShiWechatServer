@@ -3,7 +3,7 @@
 mysql修改字段名：
 ALTER  TABLE 表名 CHANGE 旧字段名 新字段名 新数据类型;	
 
- insert into dishes (product_name,  product_price,  product_sales,  product_description,  product_icon, seller_phone, category_type) values ('电饭锅', '503', '0', '真的很好', '1', '13232455678', '10');
+ insert into product (product_name,  product_price,  product_sales,  product_description,  product_icon, seller_phone, category_type) values ('电饭锅', '503', '0', '真的很好', '1', '13232455678', '10');
 
     http://1.bp.blogspot.com/-6peIH-ag0y4/Uj1qWJQKN3I/AAAAAAAAAPM/wms5x3g2z5g/s1600/%E7%82%AE.jpg
 http://1.bp.blogspot.com/-6peIH-ag0y4/Uj1qWJQKN3I/AAAAAAAAAPM/wms5x3g2z5g/s1600/%E7%82%AE.jpg
@@ -24,6 +24,17 @@ const mysql = require('mysql');
 const config = require('../config');
 var connection = mysql.createConnection(config);
 connection.connect();
+connection.on('error', 
+function (err) {
+  if (err) {
+    // 如果是连接断开，自动重新连接
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      connect();
+    } else {
+      console.error(err.stack || err);
+    }
+  }
+});
 
 async function insertUser(data) {
     let dataInfo = await searchUser(data.openId);

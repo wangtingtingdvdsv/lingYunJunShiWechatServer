@@ -1,11 +1,22 @@
 const mysql = require('mysql');
 const config = require('../config');
-const dishesTable = require('./dishes');
+const productTable = require('./product');
 var connection = mysql.createConnection(config);
 connection.connect();
+connection.on('error', 
+function (err) {
+  if (err) {
+    // 如果是连接断开，自动重新连接
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+      connect();
+    } else {
+      console.error(err.stack || err);
+    }
+  }
+});
 
 async function insertOrderDetail(productId, productQuantity, orderId) { //插入订单详情
-    let product = await dishesTable.getProductById(productId);
+    let product = await productTable.getProductById(productId);
     console.log('product', product);
     let sql = `INSERT INTO orderdetails(order_id, product_id , product_name, product_icon, product_price,product_quantity, seller_phone) values ('${orderId}', '${productId}', '${product.product_name}','${product.product_icon}', '${product.product_price}','${productQuantity}', '${product.seller_phone}')`;
    console.log('sql:', sql);

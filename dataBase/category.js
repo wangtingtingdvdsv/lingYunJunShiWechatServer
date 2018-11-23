@@ -14,9 +14,9 @@ function (err) {
   }
 });
 
-async function getProductPic(productId) {
 
-    let sql = `select * from product_pic where productId = ${productId}`;
+async function getAllCategory() {
+    let sql = 'select * from category';
     let result = await query(sql);
     return result;
 }
@@ -34,5 +34,5 @@ async function query(sql) {
     })
 } 
 module.exports = {
-    getProductPic
+    getAllCategory
 };

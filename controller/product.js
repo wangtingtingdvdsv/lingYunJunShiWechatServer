@@ -1,10 +1,10 @@
-const dishes = require('../dataBase/dishes.js');
-const category = require('../dataBase/categorytable.js');
+const product = require('../dataBase/product.js');
+const categoryTable = require('../dataBase/category.js');
 
 var getProductList = async function(ctx, next) { //商品列表查询
     var sort = ctx.request.query.sort;
-    let categoryTable = await category.getAllCategory();
-    let search = await dishes.getProductList(categoryTable);
+    let category = await categoryTable.getAllCategory();
+    let search = await product.getProductList(category);
     console.log('商品列表', search);
     let products = search.filter(function(categoryProducts) {
         return categoryProducts.products;
@@ -17,8 +17,21 @@ var getProductList = async function(ctx, next) { //商品列表查询
     }
 }
 
-var productSearchByKey = function(ctx, next) { //商品搜索查询
+var productSearchByKey = async function(ctx, next) { //商品搜索查询
+    console.log('query', ctx.request.query);
+    let key = ctx.request.query.key;
+    console.log('key', key);
+    if(key == '') {
+        return;
+    }
+    let products = await product.getProductBykey(key);
 
+    ctx.status = 200;
+    ctx.body = {
+        code: 0,
+        msg: 'success',
+        data: products
+    }
 }
 
 module.exports = {

@@ -1,7 +1,7 @@
 const Koa = require('koa')
 const app = new Koa()
 var cors = require('koa2-cors');
-const views = require('koa-views')
+
 const json = require('koa-json')
 const onerror = require('koa-onerror')
 
@@ -26,9 +26,7 @@ app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
-app.use(views(__dirname + '/views', {
-  extension: 'pug'
-}))
+
 
 // logger
 app.use(async (ctx, next) => {
