@@ -54,22 +54,33 @@
 //         console.log(data);
 //     }
 // })
+//商品
+$.ajax({  //获取商品列表
+    type: 'get',
+    url: 'https://wangtingting.top:9006/buyer/product/key',
+    data:{
+        key:'笔'
+    },
+    success: function(data) {
+        console.log(data);
+    }
+})
 
 
 
 
 //--------------------------------------------------------------
 //商品
-$.ajax({  //获取商品列表
-    type: 'get',
-    url: 'http://localhost:3000/buyer/product/list',
-    data:{
+// $.ajax({  //获取商品列表
+//     type: 'get',
+//     url: 'http://localhost:3000/buyer/product/list',
+//     data:{
 
-    },
-    success: function(data) {
-        console.log(data);
-    }
-})
+//     },
+//     success: function(data) {
+//         console.log(data);
+//     }
+// })
 //-------------------------------------------------
 //评论
 //  $.ajax({  //获取商品评论
