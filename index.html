@@ -12,6 +12,29 @@
     
 </body>
 <script>
+// $.ajax({  //添加和修改商品
+//     type: 'POST',
+//     url: 'http://localhost:3006/buyer/createOrder',
+//     data: {
+//     orderAmount:56,
+//     userName: "张三",
+//     userPhone: "18868822111",
+//     userAddress: "慕课网总部",
+//     userOpenid: "ew3euwhd7sjw9diwkq",
+//     deliveryTime:1533340109205,
+//     payStatus:1,
+//     items: [{
+//         productId: "1",
+//         productQuantity: 3 
+//     },{
+//         productId: "2",
+//         productQuantity: 1 
+//     }]
+// },
+//     success: function(data) {
+//         console.log(data);
+//     }
+// })
    
 //     $.ajax({  //登录  
 //     type: 'get',
@@ -55,16 +78,16 @@
 //     }
 // })
 //商品
-$.ajax({  //获取商品列表
-    type: 'get',
-    url: 'https://wangtingting.top:9006/buyer/product/key',
-    data:{
-        key:'笔'
-    },
-    success: function(data) {
-        console.log(data);
-    }
-})
+// $.ajax({  //获取商品列表
+//     type: 'get',
+//     url: 'http://localhost:3006/buyer/product/key',
+//     data:{
+//         key:'笔'
+//     },
+//     success: function(data) {
+//         console.log(data);
+//     }
+// })
 
 
 
@@ -73,7 +96,7 @@ $.ajax({  //获取商品列表
 //商品
 // $.ajax({  //获取商品列表
 //     type: 'get',
-//     url: 'http://localhost:3000/buyer/product/list',
+//     url: 'http://localhost:3006/buyer/product/list',
 //     data:{
 
 //     },

@@ -1,10 +1,9 @@
-const product = require('../dataBase/product.js');
-const categoryTable = require('../dataBase/category.js');
+const dataBase = require('../dataBase/dataBase.js');
 
 var getProductList = async function(ctx, next) { //商品列表查询
     var sort = ctx.request.query.sort;
-    let category = await categoryTable.getAllCategory();
-    let search = await product.getProductList(category);
+    let category = await dataBase.getAllCategory();
+    let search = await dataBase.getProductList(category);
     console.log('商品列表', search);
     let products = search.filter(function(categoryProducts) {
         return categoryProducts.products;
@@ -24,7 +23,7 @@ var productSearchByKey = async function(ctx, next) { //商品搜索查询
     if(key == '') {
         return;
     }
-    let products = await product.getProductBykey(key);
+    let products = await dataBase.getProductBykey(key);
 
     ctx.status = 200;
     ctx.body = {

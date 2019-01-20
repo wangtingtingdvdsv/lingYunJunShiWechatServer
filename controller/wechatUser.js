@@ -1,6 +1,6 @@
 const axios = require('axios');
 const {WXBizDataCrypt} = require('../utils.js');
-const userTbale = require('../dataBase/userTable.js');
+const dataBase = require('../dataBase/dataBase.js');
 
 const appId = 'wx33fdb2328d611917';
 const secret = '6c2ab9894fd10a107642e37b62b13b28'; 
@@ -20,7 +20,7 @@ const secret = '6c2ab9894fd10a107642e37b62b13b28';
 var modifyUserInfo = async function(ctx, next) {//信息修改接口
     let data = ctx.request.body;
     console.log('data', data)
-    userTbale.modifyUserInfo(data)
+    dataBase.modifyUserInfo(data)
     ctx.status = 200;
     ctx.body = {
         code: 0,
@@ -31,7 +31,7 @@ var modifyUserInfo = async function(ctx, next) {//信息修改接口
 
 var searchUserInfo = async function(ctx, next) { //信息查询接口
     let openId = ctx.query.openId;
-    let search = await userTbale.searchUser(openId);
+    let search = await dataBase.searchUser(openId);
     ctx.status = 200;
     ctx.body = {
         code: 0,
@@ -56,11 +56,11 @@ var login = async function (ctx, next) {  //登录接口
     let info = pc.decryptData(encryptedData , iv)
 
 
-    var result = await userTbale.insertUser(info)
+    var result = await dataBase.insertUser(info)
 
 
 
-    var search = await userTbale.searchUser(openid)
+    var search = await dataBase.searchUser(openid)
     ctx.status = 200;
         //console.log('se', search)
         ctx.body = {
