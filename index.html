@@ -12,12 +12,12 @@
     
 </body>
 <script>
-// $.ajax({  //添加和修改商品
+// $.ajax({  
 //     type: 'POST',
-//     url: 'http://localhost:3006/buyer/createOrder',
+//     url: 'https://wangtingting.top:9006/buyer/createOrder',
 //     data: {
 //     orderAmount:56,
-//     userName: "张三",
+//     userName: "张",
 //     userPhone: "18868822111",
 //     userAddress: "慕课网总部",
 //     userOpenid: "ew3euwhd7sjw9diwkq",
@@ -118,9 +118,9 @@
 //订单
 //  $.ajax({  //获取商品订单
 //     type: 'get',
-//     url: 'http://localhost:3000/buyer/searchOrderByopenid',
+//     url: 'https://wangtingting.top:9006/buyer/searchOrderByopenid',
 //     data: {
-//         openId: '1'
+//         openId: 'oE3wM5PpfWIFztvhAjLLHOr_RO8A'
 //     },
 //     success: function(data) {
 //         console.log(data);
@@ -147,17 +147,17 @@
 // })
 
 
-//  $.ajax({  //订单支付
-//     type: 'post',
-//     url: 'http://localhost:3000/buyer/orderPay',
-//     data: {
-//         userOpenid: '1',
-//         orderId:1
-//     },
-//     success: function(data) {
-//         console.log(data);
-//     }
-// })
+ $.ajax({  //订单支付
+    type: 'post',
+    url: 'https://wangtingting.top:9006/buyer/orderPay',
+    data: {
+        userOpenid: 'oE3wM5Cv9iT52lJjGFGl6ZRnslWk',
+        orderId:1
+    },
+    success: function(data) {
+        console.log(data);
+    }
+})
 
 //     $.ajax({  
 //     type: 'get',

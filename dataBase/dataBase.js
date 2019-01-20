@@ -63,7 +63,7 @@ async function createOrder(data){
 }
 
 async function orderPay(userOpenid, orderId){//订单支付
-    let sql = `UPDATE orderSummary SET  pay_status='1' WHERE  order_id ='${orderId}' AND user_openid=${userOpenid}`;
+    let sql = `UPDATE orderSummary SET  pay_status='1' WHERE  order_id ='${orderId}' AND user_openid='${userOpenid}'`;
     console.log('sql', sql);
     let result = await query(sql);
     return result;
