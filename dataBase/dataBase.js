@@ -4,19 +4,10 @@ var connection = mysql.createConnection(config);
 
 connection.connect();
 
-connection.on('error', 
-function (err) {
-  if (err) {
-    // 如果是连接断开，自动重新连接
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-      console.log("***连接1**");
-      connection.connect();
-    } else {
-      console.log("***连接2**");
-      console.error(err.stack || err);
-    }
-  }
-});
+setInterval(function () {
+    connection.query('SELECT 1');
+}, 5000);
+
 /*category */
 async function getAllCategory() {
     let sql = 'select * from category';
