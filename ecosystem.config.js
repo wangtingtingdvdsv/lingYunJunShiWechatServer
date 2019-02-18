@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name: 'lingYunJunShiWechatServer.js',
-    script: 'bin/lingYunJunShiWechatServer.js',
+    script: 'lingYunJunShiWechatServer.js',
 
     // Options reference: https://pm2.io/doc/en/runtime/reference/ecosystem-file/
     args: 'one two',
