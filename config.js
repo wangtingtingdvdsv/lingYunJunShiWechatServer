@@ -6,3 +6,4 @@ var config = {
     useConnectionPooling: true
 }
 module.exports.config = config;
+

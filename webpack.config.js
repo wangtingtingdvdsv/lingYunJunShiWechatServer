@@ -14,7 +14,7 @@ fs.readdirSync('node_modules')
 
 module.exports = {
 
-  entry: ['babel-polyfill', 'lingYunJunShiWechatServer.js'],
+  entry: ['babel-polyfill', './bin/lingYunJunShiWechatServer.js'],
   target: 'node',
   output: {
     path: path.join(__dirname, 'build'),
