@@ -4,6 +4,11 @@ var connection = mysql.createConnection(config);
 
 connection.connect();
 
+setInterval(function () {
+    connection.query('SELECT 1');
+}, 5000);
+
+
 connection.on('error', 
 function (err) {
   if (err) {
