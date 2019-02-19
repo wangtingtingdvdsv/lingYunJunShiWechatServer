@@ -1,5 +1,5 @@
 ﻿
-var app = require('../app');
+var app = require('./app.js');
 var debug = require('debug')('demo:server');
 var http = require('http');
 var path = require('path');
