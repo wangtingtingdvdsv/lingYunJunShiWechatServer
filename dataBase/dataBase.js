@@ -110,7 +110,7 @@ async function getProductById(categoryId) {
             result[i].pics = pics;
         }
     }
-    return result[0];
+    return result;
 }
 
 async function getProductList(categorys) { //获取商品列表
