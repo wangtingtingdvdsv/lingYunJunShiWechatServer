@@ -8,7 +8,7 @@ async function createComment(ctx, next) { //商品评价创建
 }
 async function getCommentList(ctx, next) { //订单评论查询
     let search = await dataBase.getCommentList();
-    console.log('商品评论', search);
+   
     ctx.status = 200;
     ctx.body = {
         code: 0,

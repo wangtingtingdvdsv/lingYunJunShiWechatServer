@@ -15,6 +15,7 @@
     "babel-loader": "^7.1.5",
     "child_process": "^1.0.2",
     "content-disposition": "^0.5.2",
+    "crypto": "^1.0.1",
     "debug": "^2.6.3",
     "ee-first": "^1.1.1",
     "koa": "^2.6.2",

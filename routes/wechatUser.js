@@ -8,7 +8,7 @@ router.get('/user/info/search', wechatUser.searchUserInfo) //查询
 router.post('/user/info/modify', wechatUser.modifyUserInfo) //修改
 
 router.get('/q/w', function(ctx, next) {
-    console.log('1111111111111');
+
     ctx.status = 200;
     ctx.body = {
         code: 0,

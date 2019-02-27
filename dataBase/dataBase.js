@@ -40,9 +40,9 @@ async function getCommentList() {
 
 async function insertOrderDetail(productId, productQuantity, orderId) { //插入订单详情
     let product = await getProductById(productId);
-    console.log('&&-------------product', product);
+ 
     let sql = `INSERT INTO orderDetails(order_id, product_id , product_name, product_price,product_quantity, seller_phone) values ('${orderId}', '${productId}', '${product.product_name}', '${product.product_price}','${productQuantity}', '${product.seller_phone}')`;
-   console.log('sql:', sql);
+ 
     let result = await query(sql);
     return result;
 } 
@@ -69,7 +69,7 @@ async function createOrder(data){
 
 async function orderPay(userOpenid, orderId){//订单支付
     let sql = `UPDATE orderSummary SET  pay_status='1' WHERE  order_id ='${orderId}' AND user_openid='${userOpenid}'`;
-    console.log('sql', sql);
+
     let result = await query(sql);
     return result;
 }
@@ -84,7 +84,7 @@ async function getProductBykey(key) {
     let sql = `select * from product where product_name like '%${key}%'`;
     let result = await query(sql);
   
-    //console.log('**', result);
+ 
 
     if(result) {
         for(let i = 0; i < result.length; i++) {
@@ -98,10 +98,10 @@ async function getProductBykey(key) {
 
 //通过categoryId获取商品信息
 async function getProductById(categoryId) {
-    console.log('id', categoryId);
+   
     let sql = `select * from product WHERE category_type ='${categoryId}'`;   
     let result = await query(sql);
-    //console.log('**', result);
+ 
 
     if(result && result[0]) {
         for(let i = 0; i < result.length; i++) {
@@ -119,12 +119,12 @@ async function getProductList(categorys) { //获取商品列表
         let products = await getProductById(categorys[i].category_id);
         if(products) {
             categorys[i].products = products;
-            console.log('products', products);
+         
         }
         
        
     }
-    console.log('categorys', categorys);
+  
     return categorys;
 }
 /*productPicTable */
@@ -166,7 +166,7 @@ async function query(sql) {
                 reject( err )
             } else {
                resolve(result);
-               //console.log("r", result);
+             
             }
         })  
     })

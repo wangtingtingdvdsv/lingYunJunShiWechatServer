@@ -17,7 +17,7 @@ var getProductList = async function(ctx, next) { //商品列表查询
 }
 
 var productSearchByKey = async function(ctx, next) { //商品搜索查询
-    console.log('query', ctx.request.query);
+ 
     let key = ctx.request.query.key;
  
     if(key == '') {
