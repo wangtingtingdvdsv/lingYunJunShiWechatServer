@@ -81,7 +81,7 @@ async function orderPay(ctx, next) { //订单支付
         body: formData
     },function (err, response, body) {
         if (!err && response.statusCode === 200){
-            
+            console.log('@@@@@@@', body.toString("utf-8"));
             var result_code = getXMLNodeValue('result_code', body.toString("utf-8"));
             var resultCode = result_code.split('[')[2].split(']')[0];
             if(resultCode === 'SUCCESS'){ 
@@ -171,6 +171,7 @@ var get_client_ip = function(req) {
 //解析xml
 function getXMLNodeValue(node_name, xml) {
     var tmp = xml.split("<" + node_name + ">");
+    console.log('$', tmp[1]);
     var _tmp = tmp[1].split("</" + node_name + ">");
     return _tmp[0];
 }
