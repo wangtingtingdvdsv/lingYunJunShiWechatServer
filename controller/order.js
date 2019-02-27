@@ -74,7 +74,7 @@ async function orderPay(ctx, next) { //订单支付
     formData += "<trade_type>JSAPI</trade_type>";
     formData += "<sign>" + paysignjsapi(wechatApp.appId,detail,wechatApp.mch_id,nonce_str,notify_url,openid,out_trade_no,spbill_create_ip,total_fee,'JSAPI') + "</sign>";
     formData += "</xml>";
-    
+    console.log('formData', formData);
    request({
         url: apiUrl,
         method: 'POST',
@@ -82,7 +82,7 @@ async function orderPay(ctx, next) { //订单支付
     },function (err, response, body) {
         if (!err && response.statusCode === 200){
             console.log('@@@@@@@', body.toString("utf-8"));
-            var result_code = getXMLNodeValue('result_code', body.toString("utf-8"));
+            var result_code = getXMLNodeValue('return_code', body.toString("utf-8"));
             var resultCode = result_code.split('[')[2].split(']')[0];
             if(resultCode === 'SUCCESS'){ 
                 //成功
