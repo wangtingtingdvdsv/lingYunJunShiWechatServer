@@ -7,9 +7,9 @@ async function searchOrderByopenid(ctx, next) {
         return;
     }
     let search = await dataBase.searchOrderByopenid(openId);
-    console.log('订单列表', search);
+
     let details = await dataBase.getOrderDetails(search.order_id);
-    console.log('^details^', details)
+
     search.orderDetailList = details;
     ctx.status = 200;
     ctx.body = {
@@ -26,7 +26,7 @@ async function createOrder(ctx, next) { //订单创建
     }
     let items = data.items;
     let result = await dataBase.createOrder(data);
-    console.log('#result#', items);
+   
     items.forEach(function(item) {
         dataBase.insertOrderDetail(item.productId, item.productQuantity, result.insertId);
     })
@@ -53,7 +53,7 @@ async function orderPay(ctx, next) { //订单支付
     var total_fee = data.total_fee *100   //订单价格,单位是分
     var openid= data.userOpenid
     var detail = data.detail;
-    var out_trade_no = data.out_trade_no; //订单号
+    var out_trade_no = getWxPayOrdrID(); //订单号
 
     var timeStamp = createTimeStamp(); //时间节点
     var nonce_str = createNonceStr() + createTimeStamp(); //随机字符串
@@ -79,7 +79,7 @@ async function orderPay(ctx, next) { //订单支付
         body: formData
     },function (err, response, body) {
         if (!err && response.statusCode === 200){
-            // console.log(body);
+            
             var result_code = getXMLNodeValue('result_code', body.toString("utf-8"));
             var resultCode = result_code.split('[')[2].split(']')[0];
             if(resultCode === 'SUCCESS'){ 
@@ -149,7 +149,7 @@ function paysignjs(appid, nonceStr, package, signType, timeStamp) {
     };
     var string = raw1(ret);
     string = string + '&key='+key;
-    // console.log(string);
+   
     var crypto = require('crypto');
     return crypto.createHash('md5').update(string, 'utf8').digest('hex');
 }
@@ -181,6 +181,41 @@ function createNonceStr() {
 function createTimeStamp() {
     return parseInt(new Date().getTime() / 1000) + ''
 }
+
+function getWxPayOrdrID(){
+    var myDate = new Date();
+    var year = myDate.getFullYear();
+    var mouth = myDate.getMonth() + 1;
+    var day = myDate.getDate();
+    var hour = myDate.getHours();
+    var minute = myDate.getMinutes();
+    var second = myDate.getSeconds();
+    var msecond = myDate.getMilliseconds(); //获取当前毫秒数(0-999)
+    if(mouth < 10){ /*月份小于10  就在前面加个0*/
+        mouth = String(String(0) + String(mouth));
+    }
+    if(day < 10){ /*日期小于10  就在前面加个0*/
+        day = String(String(0) + String(day));
+    }
+    if(hour < 10){ /*时小于10  就在前面加个0*/
+        hour = String(String(0) + String(hour));
+    }
+    if(minute < 10){ /*分小于10  就在前面加个0*/
+        minute = String(String(0) + String(minute));
+    }
+    if(second < 10){ /*秒小于10  就在前面加个0*/
+        second = String(String(0) + String(second));
+    }
+    if (msecond < 10) {
+        msecond = String(String(00) + String(second));
+    } else if(msecond >= 10 && msecond < 100){
+        msecond = String(String(0) + String(second));
+    }
+
+    var currentDate = String(year) + String(mouth) + String(day) + String(hour) + String(minute) + String(second) + String(msecond);
+    return currentDate;
+}
+
 
 module.exports = {
     searchOrderByopenid,

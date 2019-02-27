@@ -4,7 +4,7 @@ var getProductList = async function(ctx, next) { //商品列表查询
     var sort = ctx.request.query.sort;
     let category = await dataBase.getAllCategory();
     let search = await dataBase.getProductList(category);
-    console.log('商品列表', search);
+    
     let products = search.filter(function(categoryProducts) {
         return categoryProducts.products;
     })
@@ -19,7 +19,7 @@ var getProductList = async function(ctx, next) { //商品列表查询
 var productSearchByKey = async function(ctx, next) { //商品搜索查询
     console.log('query', ctx.request.query);
     let key = ctx.request.query.key;
-    console.log('key', key);
+ 
     if(key == '') {
         return;
     }

@@ -147,12 +147,6 @@ async function insertUser(data) {
     return result;
 }
 
-// async function insertUserAddressAndPhone(address, phone) {
-//     var sql = `INSERT INTO usertable(user_address, user_phone) values ('${address}', '${phone}')`;
-//     let result = await query(sql);
-//     console.log('insert2', result);
-// }
-
 async function modifyUserInfo(data){
     sql = `UPDATE usertable SET user_name='${data.userName}',  user_gender='${data.userGender}', user_phone='${data.userPhone}' WHERE user_openid ='${data.openId}'`;
     let result = await query(sql);
