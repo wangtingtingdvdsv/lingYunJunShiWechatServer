@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node bin/lingYunJunShiWechatServer.js",
-    "dev": "./node_modules/.bin/nodemon bin/lingYunJunShiWechatServer.js",
+    "start": "node ./lingYunJunShiWechatServer.js",
+    "dev": "./node_modules/.bin/nodemon ./lingYunJunShiWechatServer.js",
     "prd": "pm2 start bin/lingYunJunShiWechatServer.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf ./build/lingYunJunShiWechatServer.js &&  webpack --config webpack.config.js "
