@@ -105,17 +105,14 @@ async function orderPay(ctx, next) { //订单支付
                             paySign: _paySignjs,
                             status:200
                         };
+                        ctx.status = 200;
+                        ctx.body = {
+                            code: 0,
+                            msg: 'success',
+                            data: args
+                        }
+                    
                     }
-                 
-          
-                    ctx.status = 200;
-                    ctx.body = {
-                        code: 0,
-                        msg: 'success',
-                        data: args
-                    }
-                
-
         }else{                         
                 //失败
                 var err_code_des = getXMLNodeValue('err_code_des',body.toString("utf-8"));
