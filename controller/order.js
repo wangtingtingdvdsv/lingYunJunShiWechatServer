@@ -1,3 +1,4 @@
+
 const dataBase = require('../dataBase/dataBase.js');
 const {wechatApp} = require('../config');
 var crypto = require('crypto');
