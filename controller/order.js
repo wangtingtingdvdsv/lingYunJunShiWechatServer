@@ -234,7 +234,36 @@ function paysignjsapi(appid,body,mch_id,nonce_str,notify_url,openid,out_trade_no
     var sign = crypto.createHash('md5').update(string, 'utf8').digest('hex');
     return sign.toUpperCase()
 }
+function raw1(args) {
+    var keys = Object.keys(args);
+    keys = keys.sort()
+    var newArgs = {};
+    keys.forEach(function(key) {
+        newArgs[key] = args[key];
+    });
 
+    var string = '';
+    for(var k in newArgs) {
+        string += '&' + k + '=' + newArgs[k];
+    }
+    string = string.substr(1);
+    return string;
+}
+
+function raw(args) {
+    var keys = Object.keys(args);
+    keys = keys.sort();
+    var newArgs = {};
+    keys.forEach(function(key) {
+        newArgs[key.toLowerCase()] = args[key];
+    });
+    var string = '';
+    for(var k in newArgs) {
+        string += '&' + k + '=' + newArgs[k];
+    }
+    string = string.substr(1);
+    return string;
+}
 
 module.exports = {
     searchOrderByopenid,
