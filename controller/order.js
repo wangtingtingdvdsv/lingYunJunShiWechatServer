@@ -158,7 +158,7 @@ function paysignjs(appid, nonceStr, package, signType, timeStamp) {
         timeStamp: timeStamp
     };
     var string = raw1(ret);
-    string = string + '&key='+key;
+    string = string + '&key='+wechatApp.key;
    
 
     return crypto.createHash('md5').update(string, 'utf8').digest('hex');
