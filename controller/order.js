@@ -80,9 +80,10 @@ async function orderPay(ctx, next) { //订单支付
         method: 'POST',
         body: formData
     },function (err, response, body) {
+        console.log('body', body);
         if (!err && response.statusCode === 200){
             console.log('@@@@@@@', body.toString("utf-8"));
-            var result_code = getXMLNodeValue('return_code', body.toString("utf-8"));
+            var result_code = getXMLNodeValue('result_code', body.toString("utf-8"));
             var resultCode = result_code.split('[')[2].split(']')[0];
             if(resultCode === 'SUCCESS'){ 
                 //成功
@@ -234,6 +235,7 @@ function paysignjsapi(appid,body,mch_id,nonce_str,notify_url,openid,out_trade_no
     };
     var string = raw(ret);
     string = string + '&key='+ wechatApp.key;
+    console.log('string', string);
     var sign = crypto.createHash('md5').update(string, 'utf8').digest('hex');
     return sign.toUpperCase()
 }
