@@ -216,6 +216,25 @@ function getWxPayOrdrID(){
     return currentDate;
 }
 
+function paysignjsapi(appid,body,mch_id,nonce_str,notify_url,openid,out_trade_no,spbill_create_ip,total_fee,trade_type) {
+    var ret = {
+        appid: appid,
+        body: body,
+        mch_id: mch_id,
+        nonce_str: nonce_str,
+        notify_url: notify_url,
+        openid: openid,
+        out_trade_no: out_trade_no,
+        spbill_create_ip: spbill_create_ip,
+        total_fee: total_fee,
+        trade_type: trade_type
+    };
+    var string = raw(ret);
+    string = string + '&key='+ key;
+    var sign = crypto.createHash('md5').update(string, 'utf8').digest('hex');
+    return sign.toUpperCase()
+}
+
 
 module.exports = {
     searchOrderByopenid,
