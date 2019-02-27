@@ -88,33 +88,33 @@ async function orderPay(ctx, next) { //订单支付
           
 
 
-                new Promise((resolve, reject) => {
-                    var result_code = getXMLNodeValue('result_code', body.toString("utf-8"));
-                    var resultCode = result_code.split('[')[2].split(']')[0];
-                    if(resultCode === 'SUCCESS'){ 
-                        //成功
-                        var prepay_id = getXMLNodeValue('prepay_id', body.toString("utf-8")).split('[')[2].split(']')[0]; //获取到prepay_id
-                        //签名
-                        var _paySignjs = paysignjs(wechatApp.appId, nonce_str, 'prepay_id='+ prepay_id,'MD5',timeStamp);
-                        var args = {
-                            appId: wechatApp.appId,
-                            timeStamp: timeStamp,
-                            nonceStr: nonce_str,
-                            signType: "MD5",
-                            package: prepay_id,
-                            paySign: _paySignjs,
-                            status:200
-                        };
-                    }
-                    return args;
-                }).then((args) => {
+              
+                    // var result_code = getXMLNodeValue('result_code', body.toString("utf-8"));
+                    // var resultCode = result_code.split('[')[2].split(']')[0];
+                    // if(resultCode === 'SUCCESS'){ 
+                    //     //成功
+                    //     var prepay_id = getXMLNodeValue('prepay_id', body.toString("utf-8")).split('[')[2].split(']')[0]; //获取到prepay_id
+                    //     //签名
+                    //     var _paySignjs = paysignjs(wechatApp.appId, nonce_str, 'prepay_id='+ prepay_id,'MD5',timeStamp);
+                    //     var args = {
+                    //         appId: wechatApp.appId,
+                    //         timeStamp: timeStamp,
+                    //         nonceStr: nonce_str,
+                    //         signType: "MD5",
+                    //         package: prepay_id,
+                    //         paySign: _paySignjs,
+                    //         status:200
+                    //     };
+                    // }
+                 
+          
                     ctx.status = 200;
                     ctx.body = {
                         code: 0,
                         msg: 'success',
-                        data: args
+                        data: null
                     }
-                })
+                
 
         }else{                         
                 //失败
