@@ -115,7 +115,7 @@ async function orderPay(ctx, next) { //订单支付
                     }
                 })
 
-            }else{                         
+        }else{                         
                 //失败
                 var err_code_des = getXMLNodeValue('err_code_des',body.toString("utf-8"));
                 var errDes = err_code_des.split('[')[2].split(']')[0];
@@ -130,8 +130,6 @@ async function orderPay(ctx, next) { //订单支付
                    msg: 'success',
                    data: errArg
                }
-            }
-           
         }
     })
 
