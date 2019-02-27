@@ -1,6 +1,7 @@
 const dataBase = require('../dataBase/dataBase.js');
 const {wechatApp} = require('../config');
 var crypto = require('crypto');
+var request = require('request');
 
 async function searchOrderByopenid(ctx, next) {
     let openId = ctx.request.query.openId;
