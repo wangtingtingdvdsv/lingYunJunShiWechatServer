@@ -230,7 +230,7 @@ function paysignjsapi(appid,body,mch_id,nonce_str,notify_url,openid,out_trade_no
         trade_type: trade_type
     };
     var string = raw(ret);
-    string = string + '&key='+ key;
+    string = string + '&key='+ wechatApp.key;
     var sign = crypto.createHash('md5').update(string, 'utf8').digest('hex');
     return sign.toUpperCase()
 }

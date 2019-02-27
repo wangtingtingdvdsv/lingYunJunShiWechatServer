@@ -8,7 +8,7 @@ const {wechatApp} = require('../config');
 
 var modifyUserInfo = async function(ctx, next) {//信息修改接口
     let data = ctx.request.body;
-    console.log('data', data)
+ 
     dataBase.modifyUserInfo(data)
     ctx.status = 200;
     ctx.body = {
@@ -51,7 +51,7 @@ var login = async function (ctx, next) {  //登录接口
 
     var search = await dataBase.searchUser(openid)
     ctx.status = 200;
-        //console.log('se', search)
+      
         ctx.body = {
             code: 0,
             msg: 'success',
