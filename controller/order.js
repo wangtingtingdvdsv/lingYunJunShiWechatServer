@@ -1,5 +1,6 @@
 const dataBase = require('../dataBase/dataBase.js');
 const {wechatApp} = require('../config');
+var crypto = require('crypto');
 
 async function searchOrderByopenid(ctx, next) {
     let openId = ctx.request.query.openId;
@@ -150,7 +151,7 @@ function paysignjs(appid, nonceStr, package, signType, timeStamp) {
     var string = raw1(ret);
     string = string + '&key='+key;
    
-    var crypto = require('crypto');
+
     return crypto.createHash('md5').update(string, 'utf8').digest('hex');
 }
 
