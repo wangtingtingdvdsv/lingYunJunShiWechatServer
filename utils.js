@@ -175,7 +175,7 @@ function raw(args) {
 }
 
 module.exports = {
-  getXMLNodeValue
+  getXMLNodeValue,
   paysignjs,
   get_client_ip,
   createTimeStamp,

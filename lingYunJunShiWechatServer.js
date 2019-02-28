@@ -1,63 +1,55 @@
-﻿
-var app = require('./app.js');
-var debug = require('debug')('demo:server');
-var http = require('http');
-var path = require('path');
+const Koa = require('koa')
+const app = new Koa()
+var cors = require('koa2-cors');
+
+const json = require('koa-json')
+const onerror = require('koa-onerror')
+
+const koaBody = require('koa-body') 
+const logger = require('koa-logger')
+
+// const admin = require('./routes/admin')
+// const category = require('./routes/category')
+const comment = require('./routes/comment')
+const order = require('./routes/order')
+const product = require('./routes/product')
+const wechatUser = require('./routes/wechatUser')
+
+// error handler
+onerror(app)
+
+app.use(koaBody());
+app.use(cors())
+// middlewares
+
+app.use(json())
+app.use(logger())
+app.use(require('koa-static')(__dirname + '/public'))
 
 
-// var port = normalizePort(process.env.PORT || '3006');
-// var server = http.createServer(app.callback());
 
+// logger
+app.use(async (ctx, next) => {
+  const start = new Date()
+  await next()
+  const ms = new Date() - start
+  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+})
+
+// routes
+// app.use(admin.routes(), admin.allowedMethods())
+// app.use(category.routes(), category.allowedMethods())
+app.use(order.routes()).use(order.allowedMethods())
+app.use(comment.routes(), comment.allowedMethods())
+
+app.use(product.routes(), product.allowedMethods())
+app.use(wechatUser.routes(), wechatUser.allowedMethods())
+
+// error-handling
+app.on('error', (err, ctx) => {
+  console.error('server error', err, ctx)
+});
 app.listen(3006, function() {
   console.log('3006端口启动成功');
 });
-// server.on('error', onError);
-// server.on('listening', onListening);
-
-// function normalizePort(val) {
-//   var port = parseInt(val, 10);
-//   if (isNaN(port)) {
-//     // named pipe
-//     return val;
-//   }
-//   if (port >= 0) {
-//     // port number
-//     return port;
-//   }
-//   return false;
-// }
-// /**
-//  * Event listener for HTTP server "error" event.
-//  */
-// function onError(error) {
-//   if (error.syscall !== 'listen') {
-//     throw error;
-//   }
-//   var bind = typeof port === 'string'
-//     ? 'Pipe ' + port
-//     : 'Port ' + port;
-//   // handle specific listen errors with friendly messages
-//   switch (error.code) {
-//     case 'EACCES':
-//       console.error(bind + ' requires elevated privileges');
-//       process.exit(1);
-//       break;
-//     case 'EADDRINUSE':
-//       console.error(bind + ' is already in use');
-//       process.exit(1);
-//       break;
-//     default:
-//       throw error;
-//   }
-// }
-// /**
-//  * Event listener for HTTP server "listening" event.
-//  */
-// function onListening() {
-//   var addr = server.address();
-//   var bind = typeof addr === 'string'
-//     ? 'pipe ' + addr
-//     : 'port ' + addr.port;
-//   debug('Listening on ' + bind);
-// }
 
