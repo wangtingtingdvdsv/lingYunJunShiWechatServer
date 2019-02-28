@@ -41,7 +41,7 @@ async function createOrder(ctx, next) { //订单创建
 }
  async function  orderPay(ctx,next) { //订单支付
     let data = ctx.request.body;
-    if(!(data.userOpenid || data.orderId || data.total_fee || data.detail)) {
+    if(!(data.userOpenid && data.orderId && data.total_fee && data.detail)) {
         ctx.status = 400;
         ctx.body = '参数不齐全';
         return;
