@@ -39,7 +39,7 @@ app.use(async (ctx, next) => {
 // routes
 // app.use(admin.routes(), admin.allowedMethods())
 // app.use(category.routes(), category.allowedMethods())
-app.use(order.routes(), order.allowedMethods())
+app.use(order.routes()).use(order.allowedMethods())
 app.use(comment.routes(), comment.allowedMethods())
 
 app.use(product.routes(), product.allowedMethods())
