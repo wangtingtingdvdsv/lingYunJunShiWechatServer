@@ -46,7 +46,7 @@ async function createOrder(ctx, next) { //订单创建
 
 
 
-async function orderPay(next) { //订单支付
+ function  *orderPay(next) { //订单支付
 //     let data = ctx.request.body;
     
     
