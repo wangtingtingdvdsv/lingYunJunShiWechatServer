@@ -1,6 +1,6 @@
 
 const dataBase = require('../dataBase/dataBase.js');
-const Util = require('../util.js')
+const Util = require('../utils.js')
 const {wechatApp} = require('../config');
 var crypto = require('crypto');
 var request = require('request');
