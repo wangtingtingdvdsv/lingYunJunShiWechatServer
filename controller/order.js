@@ -49,6 +49,13 @@ async function createOrder(ctx, next) { //订单创建
 async function orderPay(ctx, next) { //订单支付
     let data = ctx.request.body;
     if(!(data.userOpenid || data.orderId || data.total_fee || data.detail)) {
+        
+        ctx.status = 400;
+        ctx.body = {
+            code: 0,
+            msg: 'error',
+            data: '参数不齐全'
+        }
         return;
     }
 //total_fee, userOpenid, detail, orderId 
@@ -57,7 +64,6 @@ async function orderPay(ctx, next) { //订单支付
     var openid= data.userOpenid
     var detail = data.detail;
     var out_trade_no = getWxPayOrdrID(); //订单号
-
     var timeStamp = createTimeStamp(); //时间节点
     var nonce_str = createNonceStr() + createTimeStamp(); //随机字符串
     var spbill_create_ip = get_client_ip(ctx); //请求ip
@@ -67,7 +73,6 @@ async function orderPay(ctx, next) { //订单支付
     formData += "<body>" + detail + "</body>"; //商品描述
     formData += "<mch_id>"+wechatApp.mch_id+"</mch_id>"; //商户号
     formData += "<nonce_str>"+nonce_str+"</nonce_str>"; //随机字符串
-
     formData += "<notify_url>"+notify_url+"</notify_url>";
     formData += "<openid>" + openid + "</openid>";
     formData += "<out_trade_no>" + out_trade_no + "</out_trade_no>";//订单号
@@ -77,14 +82,14 @@ async function orderPay(ctx, next) { //订单支付
     formData += "<sign>" + paysignjsapi(wechatApp.appId,detail,wechatApp.mch_id,nonce_str,notify_url,openid,out_trade_no,spbill_create_ip,total_fee,'JSAPI') + "</sign>";
     formData += "</xml>";
     console.log('formData', formData);
-   request({
+   var resultData =  await request({
         url: apiUrl,
         method: 'POST',
         body: formData
     },function (err, response, body) {
-        console.log('body', body);
+    
         if (!err && response.statusCode === 200){
-            console.log('@@@@@@@', body.toString("utf-8"));              
+                      
             var result_code = getXMLNodeValue('result_code', body.toString("utf-8"));
             var resultCode = result_code.split('[')[2].split(']')[0];
             if(resultCode === 'SUCCESS'){ 
@@ -101,14 +106,10 @@ async function orderPay(ctx, next) { //订单支付
                     paySign: _paySignjs,
                     status:200
                 };
+                resolve(args);
+                //注意这里
                 console.log('args======', args);
-                ctx.status = 200;
-                ctx.body = {
-                    code: 0,
-                    msg: 'success',
-                    data: args
-                }
-            
+
             }
         }else{                         
                 //失败
@@ -119,17 +120,16 @@ async function orderPay(ctx, next) { //订单支付
                    errMsg: errDes
                };
 
-               ctx.status = 400;
-               ctx.body = {
-                   code: 0,
-                   msg: 'success',
-                   data: errArg
-               }
+               resolve(errArg);
         }
     })
 
-
-
+    ctx.status = 200;
+    ctx.body = {
+        code: 0,
+        msg: 'success',
+        data: resultData
+    }
    // await dataBase.orderPay(data.userOpenid, data.orderId);
 
 }
