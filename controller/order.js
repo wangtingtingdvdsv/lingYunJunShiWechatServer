@@ -66,11 +66,11 @@ async function createOrder(ctx, next) { //订单创建
             body: formData
         },function (err, response, body) {
             if (!err && response.statusCode === 200){
-                var result_code = getXMLNodeValue('result_code', body.toString("utf-8"));
+                var result_code = Util.getXMLNodeValue('result_code', body.toString("utf-8"));
                 var resultCode = result_code.split('[')[2].split(']')[0];
                 resolve(dealPaymentSuccessful(resultCode, body, nonce_str, timeStamp))
             }else{                         
-                var err_code_des = getXMLNodeValue('err_code_des',body.toString("utf-8"));
+                var err_code_des = Util.getXMLNodeValue('err_code_des',body.toString("utf-8"));
                 var errDes = err_code_des.split('[')[2].split(']')[0];
                 status = 400
                 resolve(errDes);
