@@ -46,7 +46,7 @@ async function createOrder(ctx, next) { //订单创建
 
 
 
- function  *orderPay(next) { //订单支付
+ function  *orderPay(ctx,next) { //订单支付
 //     let data = ctx.request.body;
     
     
@@ -141,7 +141,7 @@ async function createOrder(ctx, next) { //订单创建
     //     data: resultData
     // }
    // console.log('resuleData', resultData);
-    this.body = {
+    ctx.body = {
         status:200,
         data:'11111'
     };
