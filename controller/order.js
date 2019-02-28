@@ -126,6 +126,7 @@ async function orderPay(ctx, next) { //订单支付
         })
 
     })
+    console.log('resultData', resultData)
     resultData.then(function(data) {
         ctx.status = 200;
         ctx.body = {
