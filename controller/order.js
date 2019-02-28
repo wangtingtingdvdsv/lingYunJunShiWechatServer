@@ -82,13 +82,13 @@ async function orderPay(ctx, next) { //订单支付
     formData += "<sign>" + paysignjsapi(wechatApp.appId,detail,wechatApp.mch_id,nonce_str,notify_url,openid,out_trade_no,spbill_create_ip,total_fee,'JSAPI') + "</sign>";
     formData += "</xml>";
     console.log('formData', formData);
-   var resultData =  await request({
+    await request({
         url: apiUrl,
         method: 'POST',
         body: formData
     },function (err, response, body) {
     
-        new Promise(function(resolve, reject) {
+     
             if (!err && response.statusCode === 200){
                       
                 var result_code = getXMLNodeValue('result_code', body.toString("utf-8"));
@@ -107,7 +107,12 @@ async function orderPay(ctx, next) { //订单支付
                         paySign: _paySignjs,
                         status:200
                     };
-                    resolve(args);
+                    ctx.status = 200;
+                    ctx.body = {
+                        code: 0,
+                        msg: 'success',
+                        data: args
+                    }
                     //注意这里
                     console.log('args======', args);
     
@@ -121,20 +126,17 @@ async function orderPay(ctx, next) { //订单支付
                        errMsg: errDes
                    };
     
-                   resolve(errArg);
+                   ctx.status = 400;
+                   ctx.body = {
+                       code: 0,
+                       msg: 'success',
+                       data: errArg
+                   }
             }
-        })
+       
 
     })
-    console.log('resultData', resultData)
-    resultData.then(function(data) {
-        ctx.status = 200;
-        ctx.body = {
-            code: 0,
-            msg: 'success',
-            data: data
-        }
-    })
+
 
    // await dataBase.orderPay(data.userOpenid, data.orderId);
 
