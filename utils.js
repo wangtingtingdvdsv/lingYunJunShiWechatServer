@@ -1,4 +1,5 @@
 var crypto = require('crypto')
+const {wechatApp} = require('./config')
 
 function WXBizDataCrypt(appId, sessionKey) {
   this.appId = appId
