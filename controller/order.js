@@ -47,7 +47,9 @@ async function createOrder(ctx, next) { //订单创建
 
 
 async function orderPay(next) { //订单支付
-    let data = this.request.body;
+    let data = this.request;
+    console.log(this)
+    console.log(this.request);
     if(!(data.userOpenid || data.orderId || data.total_fee || data.detail)) {
         
         ctx.status = 400;
