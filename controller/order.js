@@ -126,13 +126,15 @@ async function orderPay(ctx, next) { //订单支付
         })
 
     })
+    resultData.then(function(data) {
+        ctx.status = 200;
+        ctx.body = {
+            code: 0,
+            msg: 'success',
+            data: data
+        }
+    })
 
-    ctx.status = 200;
-    ctx.body = {
-        code: 0,
-        msg: 'success',
-        data: resultData
-    }
    // await dataBase.orderPay(data.userOpenid, data.orderId);
 
 }
