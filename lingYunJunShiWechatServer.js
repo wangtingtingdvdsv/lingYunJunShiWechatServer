@@ -8,7 +8,7 @@ var path = require('path');
 // var port = normalizePort(process.env.PORT || '3006');
 // var server = http.createServer(app.callback());
 
-app.listen(port, function() {
+app.listen(3006, function() {
   console.log('3006端口启动成功');
 });
 // server.on('error', onError);
