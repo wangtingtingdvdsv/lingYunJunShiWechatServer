@@ -83,7 +83,7 @@ async function orderPay(ctx, next) { //订单支付
     formData += "</xml>";
     console.log('formData', formData);
     var resultData;
-    await new Promise(function(resove, reject){
+    await new Promise(function(resolve, reject){
         request({
             url: apiUrl,
             method: 'POST',
