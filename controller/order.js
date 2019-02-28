@@ -82,60 +82,64 @@ async function orderPay(ctx, next) { //订单支付
     formData += "<sign>" + paysignjsapi(wechatApp.appId,detail,wechatApp.mch_id,nonce_str,notify_url,openid,out_trade_no,spbill_create_ip,total_fee,'JSAPI') + "</sign>";
     formData += "</xml>";
     console.log('formData', formData);
-    await request({
-        url: apiUrl,
-        method: 'POST',
-        body: formData
-    },function (err, response, body) {
-    
-     
-            if (!err && response.statusCode === 200){
-                      
-                var result_code = getXMLNodeValue('result_code', body.toString("utf-8"));
-                var resultCode = result_code.split('[')[2].split(']')[0];
-                if(resultCode === 'SUCCESS'){ 
-                    //成功
-                    var prepay_id = getXMLNodeValue('prepay_id', body.toString("utf-8")).split('[')[2].split(']')[0]; //获取到prepay_id
-                    //签名
-                    var _paySignjs = paysignjs(wechatApp.appId, nonce_str, 'prepay_id='+ prepay_id,'MD5',timeStamp);
-                    var args = {
-                        appId: wechatApp.appId,
-                        timeStamp: timeStamp,
-                        nonceStr: nonce_str,
-                        signType: "MD5",
-                        package: prepay_id,
-                        paySign: _paySignjs,
-                        status:200
-                    };
-                    ctx.status = 200;
-                    ctx.body = {
-                        code: 0,
-                        msg: 'success',
-                        data: args
+    var resultData;
+    await new Promise(function(resove, reject){
+        request({
+            url: apiUrl,
+            method: 'POST',
+            body: formData
+        },function (err, response, body) {
+        
+         
+                if (!err && response.statusCode === 200){
+                          
+                    var result_code = getXMLNodeValue('result_code', body.toString("utf-8"));
+                    var resultCode = result_code.split('[')[2].split(']')[0];
+                    if(resultCode === 'SUCCESS'){ 
+                        //成功
+                        var prepay_id = getXMLNodeValue('prepay_id', body.toString("utf-8")).split('[')[2].split(']')[0]; //获取到prepay_id
+                        //签名
+                        var _paySignjs = paysignjs(wechatApp.appId, nonce_str, 'prepay_id='+ prepay_id,'MD5',timeStamp);
+                        var args = {
+                            appId: wechatApp.appId,
+                            timeStamp: timeStamp,
+                            nonceStr: nonce_str,
+                            signType: "MD5",
+                            package: prepay_id,
+                            paySign: _paySignjs,
+                            status:200
+                        };
+                        resolve(args)
+                        //注意这里
+                        console.log('args======', args);
+        
                     }
-                    //注意这里
-                    console.log('args======', args);
-    
+                }else{                         
+                        //失败
+                        var err_code_des = getXMLNodeValue('err_code_des',body.toString("utf-8"));
+                        var errDes = err_code_des.split('[')[2].split(']')[0];
+                       var errArg = {
+                           status:400,
+                           errMsg: errDes
+                       };
+        
+                      resolve(errArg);
                 }
-            }else{                         
-                    //失败
-                    var err_code_des = getXMLNodeValue('err_code_des',body.toString("utf-8"));
-                    var errDes = err_code_des.split('[')[2].split(']')[0];
-                   var errArg = {
-                       status:400,
-                       errMsg: errDes
-                   };
     
-                   ctx.status = 400;
-                   ctx.body = {
-                       code: 0,
-                       msg: 'success',
-                       data: errArg
-                   }
-            }
-       
+        })
 
+    }).then(function(data) {
+        resultData = data;
     })
+
+
+    ctx.status = 200;
+    ctx.body = {
+        code: 0,
+        msg: 'success',
+        data: resultData
+    }
+    
 
 
    // await dataBase.orderPay(data.userOpenid, data.orderId);
