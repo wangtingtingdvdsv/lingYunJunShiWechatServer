@@ -46,7 +46,7 @@ async function createOrder(ctx, next) { //订单创建
 
 
 
-async function orderPay(ctx, next) { //订单支付
+async function orderPay(next) { //订单支付
     let data = ctx.request.body;
     if(!(data.userOpenid || data.orderId || data.total_fee || data.detail)) {
         
@@ -110,8 +110,7 @@ async function orderPay(ctx, next) { //订单支付
                             status:200
                         };
                         resolve(args)
-                        //注意这里
-                        console.log('args======', args);
+  
         
                     }
                 }else{                         
@@ -133,13 +132,13 @@ async function orderPay(ctx, next) { //订单支付
     })
 
 
-    ctx.status = 200;
-    ctx.body = {
-        code: 0,
-        msg: 'success',
-        data: resultData
-    }
-    
+    // ctx.status = 200;
+    // ctx.body = {
+    //     code: 0,
+    //     msg: 'success',
+    //     data: resultData
+    // }
+    this.body = resultData;
 
 
    // await dataBase.orderPay(data.userOpenid, data.orderId);
