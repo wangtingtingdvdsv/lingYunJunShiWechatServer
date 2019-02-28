@@ -33,9 +33,9 @@ var login = async function (ctx, next) {  //登录接口
     var encryptedData = ctx.query.encryptedData;
     var code = ctx.query.code;
     var iv = ctx.query.iv;
-
+    console.log('*********************%%%%code', code);
     var data = await getOpenIdAndSessionKey(code);
-    console.log('======================data', data);
+    console.log('======================data', data.data);
     let openid = data.data.openid;
     let session_key = data.data.session_key;
 
