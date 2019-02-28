@@ -35,15 +35,17 @@ var login = async function (ctx, next) {  //登录接口
     var iv = ctx.query.iv;
 
     var data = await getOpenIdAndSessionKey(code);
+    console.log('======================data', data);
     let openid = data.data.openid;
     let session_key = data.data.session_key;
 
 
-
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@', openid);
+    console.log('$$$$$$$$$$$$$$$$$$$$$$$$$', session_key);
     let pc = new WXBizDataCrypt(wechatApp.appId, session_key)
-
+    console.log('^^^^^^^^^^^^^^^^^^^^^');
     let info = pc.decryptData(encryptedData , iv)
-
+    console.log('******************************', info);
 
     var result = await dataBase.insertUser(info)
 
