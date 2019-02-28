@@ -141,8 +141,8 @@ async function createOrder(ctx, next) { //订单创建
     //     data: resultData
     // }
    // console.log('resuleData', resultData);
-    ctx.body = {
-        status:200,
+   ctx.status=200 
+   ctx.body = {
         data:'11111'
     };
 

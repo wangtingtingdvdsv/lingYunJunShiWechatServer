@@ -8,5 +8,9 @@ router.post('/buyer/createOrder', order.createOrder) //订单创建
 router.post('/buyer/orderPay', order.orderPay) //订单支付
 router.get('/buyer/notify', order.notifypay); //支付通知
 
+router.get('/buyer/test', function*(ctx, next){
+    ctx.body = '你好啊'
+})
+
 module.exports = router;
 
