@@ -1,5 +1,6 @@
 
 const dataBase = require('../dataBase/dataBase.js');
+const Util = require('../util.js')
 const {wechatApp} = require('../config');
 var crypto = require('crypto');
 var request = require('request');
@@ -42,22 +43,11 @@ async function createOrder(ctx, next) { //订单创建
     }
     
 }
-
-
-
-
  async function  orderPay(ctx,next) { //订单支付
     let data = ctx.request.body;
-    
-    
     if(!(data.userOpenid || data.orderId || data.total_fee || data.detail)) {
-        
         ctx.status = 400;
-        ctx.body = {
-            code: 0,
-            msg: 'error',
-            data: '参数不齐全'
-        }
+        ctx.body = '参数不齐全';
         return;
     }
 //total_fee, userOpenid, detail, orderId 
@@ -70,76 +60,52 @@ async function createOrder(ctx, next) { //订单创建
     var nonce_str = createNonceStr() + createTimeStamp(); //随机字符串
     var spbill_create_ip = get_client_ip(ctx); //请求ip
     var notify_url ='https://wangtingting.top:9006/buyer/notify';  
-    var formData = "<xml>";
-    formData += "<appid>"+wechatApp.appId+"</appid>"; //appid
-    formData += "<body>" + detail + "</body>"; //商品描述
-    formData += "<mch_id>"+wechatApp.mch_id+"</mch_id>"; //商户号
-    formData += "<nonce_str>"+nonce_str+"</nonce_str>"; //随机字符串
-    formData += "<notify_url>"+notify_url+"</notify_url>";
-    formData += "<openid>" + openid + "</openid>";
-    formData += "<out_trade_no>" + out_trade_no + "</out_trade_no>";//订单号
-    formData += "<spbill_create_ip>"+spbill_create_ip+"</spbill_create_ip>";
-    formData += "<total_fee>" + total_fee + "</total_fee>";
-    formData += "<trade_type>JSAPI</trade_type>";
-    formData += "<sign>" + paysignjsapi(wechatApp.appId,detail,wechatApp.mch_id,nonce_str,notify_url,openid,out_trade_no,spbill_create_ip,total_fee,'JSAPI') + "</sign>";
-    formData += "</xml>";
-    console.log('formData', formData);
-    var resultData;
+    let formData = Util.getfromData(wechatApp.appId, detail, wechatApp.mch_id, nonce_str,notify_url, openid, out_trade_no, spbill_create_ip, total_fee)
+    let resultData;
+    let status = 200;
     await new Promise(function(resolve, reject){
         request({
             url: apiUrl,
             method: 'POST',
             body: formData
         },function (err, response, body) {
-        
-         
-                if (!err && response.statusCode === 200){
-                          
-                    var result_code = getXMLNodeValue('result_code', body.toString("utf-8"));
-                    var resultCode = result_code.split('[')[2].split(']')[0];
-                    if(resultCode === 'SUCCESS'){ 
-                        //成功
-                        var prepay_id = getXMLNodeValue('prepay_id', body.toString("utf-8")).split('[')[2].split(']')[0]; //获取到prepay_id
-                        //签名
-                        var _paySignjs = paysignjs(wechatApp.appId, nonce_str, 'prepay_id='+ prepay_id,'MD5',timeStamp);
-                        var args = {
-                            appId: wechatApp.appId,
-                            timeStamp: timeStamp,
-                            nonceStr: nonce_str,
-                            signType: "MD5",
-                            package: prepay_id,
-                            paySign: _paySignjs,
-                            status:200
-                        };
-                        resolve(args)
-  
-        
-                    }
-                }else{                         
-                        //失败
-                        var err_code_des = getXMLNodeValue('err_code_des',body.toString("utf-8"));
-                        var errDes = err_code_des.split('[')[2].split(']')[0];
-                       var errArg = {
-                           status:400,
-                           errMsg: errDes
-                       };
-        
-                      resolve(errArg);
-                }
-    
+            if (!err && response.statusCode === 200){
+                var result_code = getXMLNodeValue('result_code', body.toString("utf-8"));
+                var resultCode = result_code.split('[')[2].split(']')[0];
+                resolve(dealPaymentSuccessful(resultCode, body, nonce_str, timeStamp))
+            }else{                         
+                var err_code_des = getXMLNodeValue('err_code_des',body.toString("utf-8"));
+                var errDes = err_code_des.split('[')[2].split(']')[0];
+                status = 400
+                resolve(errDes);
+            }
         })
-
     }).then(function(data) {
         resultData = data;
     })
-
-
-    ctx.status = 200;
+    await dataBase.orderPay(data.userOpenid, data.orderId);
+    ctx.status = status;
     ctx.body = resultData
-   // await dataBase.orderPay(data.userOpenid, data.orderId);
-
 }
 
+function dealPaymentSuccessful(resultCode, body, nonce_str, timeStamp){           
+    if(resultCode === 'SUCCESS'){ 
+        //成功
+        var prepay_id = getXMLNodeValue('prepay_id', body.toString("utf-8")).split('[')[2].split(']')[0]; //获取到prepay_id
+        //签名
+        var _paySignjs = paysignjs(wechatApp.appId, nonce_str, 'prepay_id='+ prepay_id,'MD5',timeStamp);
+        var args = {
+            appId: wechatApp.appId,
+            timeStamp: timeStamp,
+            nonceStr: nonce_str,
+            signType: "MD5",
+            package: prepay_id,
+            paySign: _paySignjs,
+            status:200
+        };
+        return args;
+    }
+}
 async function notifypay(ctx, next) {
     console.log('@@@@@@@@@@@@@@@@@支付成功')
 }
