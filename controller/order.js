@@ -141,7 +141,10 @@ async function orderPay(next) { //订单支付
     //     data: resultData
     // }
    // console.log('resuleData', resultData);
-    this.body = '11111111';
+    this.body = {
+        status:200,
+        data:'11111'
+    };
 
 
    // await dataBase.orderPay(data.userOpenid, data.orderId);
