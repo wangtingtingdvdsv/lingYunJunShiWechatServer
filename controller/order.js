@@ -140,6 +140,7 @@ async function orderPay(ctx,next) { //订单支付
     //     msg: 'success',
     //     data: resultData
     // }
+    console.log('resuleData', resultData);
     this.body = resultData;
 
 
